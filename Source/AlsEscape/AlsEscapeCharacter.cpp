@@ -68,8 +68,8 @@ void AAlsEscapeCharacter::SetupPlayerInputComponent(class UInputComponent* Playe
 	PlayerInputComponent->BindAxis("MoveForward", this, &AAlsEscapeCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AAlsEscapeCharacter::MoveRight);
 
-	PlayerInputComponent->BindAction("Sprint", IE_Pressed, this, &ADev_TemplateCharacter::CharacterSprint);
-	PlayerInputComponent->BindAction("Sprint", IE_Released, this, &ADev_TemplateCharacter::StopCharacterSprint);
+	PlayerInputComponent->BindAction("Sprint", IE_Pressed, this, &AAlsEscapeCharacter::CharacterSprint);
+	PlayerInputComponent->BindAction("Sprint", IE_Released, this, &AAlsEscapeCharacter::StopCharacterSprint);
 
 	// We have 2 versions of the rotation bindings to handle different kinds of devices differently
 	// "turn" handles devices that provide an absolute delta, such as a mouse.
@@ -143,4 +143,18 @@ void AAlsEscapeCharacter::MoveRight(float Value)
 		// add movement in that direction
 		AddMovementInput(Direction, Value);
 	}
+}
+
+void AAlsEscapeCharacter::Tick(float DeltaTime) {
+	Super::Tick(DeltaTime);
+}
+
+void AAlsEscapeCharacter::CharacterSprint() {
+	GetCharacterMovement()->MaxWalkSpeed *= SpeedFactor;
+	IsSprinting = true;
+}
+
+void AAlsEscapeCharacter::StopCharacterSprint() {
+	GetCharacterMovement()->MaxWalkSpeed = BaseSpeed;
+	IsSprinting = false;
 }

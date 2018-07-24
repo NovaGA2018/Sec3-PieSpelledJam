@@ -69,7 +69,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")bool IsSprinting;
 	UFUNCTION(BlueprintCallable, Category = "Stats") void StopCharacterSprint(); 
 	UFUNCTION(BlueprintCallable, Category = "Stats") void CharacterSprint(); 
-	UPROPERTY(EditAnywhere.BlueprintReadWrite, Category = "Stats") float SpeedFactor;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats") float SpeedFactor;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats") float BaseSpeed;
 
 public:
