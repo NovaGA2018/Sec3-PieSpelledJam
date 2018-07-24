@@ -47,6 +47,9 @@ AAlsEscapeCharacter::AAlsEscapeCharacter()
 	CollectionSphere = CreateDefaultSubobject<USphereComponent>(TEXT("CollectionSphere"));
 	CollectionSphere->SetupAttachment(RootComponent);
 	CollectionSphere->SetSphereRadius(200.0f);
+	SpeedFactor = 2.0f;
+	BaseSpeed = GetCharacterMovement()->MaxWalkSpeed;
+	PrimaryActorTick.bCanEverTick = true; 
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
@@ -65,6 +68,9 @@ void AAlsEscapeCharacter::SetupPlayerInputComponent(class UInputComponent* Playe
 	PlayerInputComponent->BindAxis("MoveForward", this, &AAlsEscapeCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AAlsEscapeCharacter::MoveRight);
 
+	PlayerInputComponent->BindAction("Sprint", IE_Pressed, this, &ADev_TemplateCharacter::CharacterSprint);
+	PlayerInputComponent->BindAction("Sprint", IE_Released, this, &ADev_TemplateCharacter::StopCharacterSprint);
+
 	// We have 2 versions of the rotation bindings to handle different kinds of devices differently
 	// "turn" handles devices that provide an absolute delta, such as a mouse.
 	// "turnrate" is for devices that we choose to treat as a rate of change, such as an analog joystick
@@ -79,6 +85,7 @@ void AAlsEscapeCharacter::SetupPlayerInputComponent(class UInputComponent* Playe
 
 	// VR headset functionality
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &AAlsEscapeCharacter::OnResetVR);
+
 }
 
 
