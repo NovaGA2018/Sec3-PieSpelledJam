@@ -66,11 +66,19 @@ protected:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	// End of APawn interface
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")bool IsSprinting;
+	UFUNCTION(BlueprintCallable, Category = "Stats") void StopCharacterSprint(); 
+	UFUNCTION(BlueprintCallable, Category = "Stats") void CharacterSprint(); 
+	UPROPERTY(EditAnywhere.BlueprintReadWrite, Category = "Stats") float SpeedFactor;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats") float BaseSpeed;
+
 public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+	virtual void Tick(float DeltaTime) override;
+   
 
 	FORCEINLINE class USphereComponet* GetCollectionSPhere() const {
 		CollectionSphere;
