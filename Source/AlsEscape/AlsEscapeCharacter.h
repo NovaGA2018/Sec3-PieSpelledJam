@@ -18,6 +18,9 @@ class AAlsEscapeCharacter : public ACharacter
 	/** Follow camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* FollowCamera;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true")) class USphereComponent* CollectionSphere;
+
 public:
 	AAlsEscapeCharacter();
 
@@ -68,5 +71,12 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+	FORCEINLINE class USphereComponet* GetCollectionSPhere() const {
+		CollectionSphere;
+
+
+	}
+
 };
 
