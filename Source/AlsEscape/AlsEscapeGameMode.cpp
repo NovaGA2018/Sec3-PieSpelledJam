@@ -3,6 +3,7 @@
 #include "AlsEscapeGameMode.h"
 #include "AlsEscapeCharacter.h"
 #include "UObject/ConstructorHelpers.h"
+#include "Blueprint/UserWidget.h"
 
 AAlsEscapeGameMode::AAlsEscapeGameMode()
 {
@@ -11,5 +12,18 @@ AAlsEscapeGameMode::AAlsEscapeGameMode()
 	if (PlayerPawnBPClass.Class != NULL)
 	{
 		DefaultPawnClass = PlayerPawnBPClass.Class;
+	}
+
+	
+}
+
+void AAlsEscapeGameMode::BeginPlay() 
+{
+	Super::BeginPlay();
+	if (HUDWidgetClass != nullptr) {
+		CurrentWidget = CreateWidget<UUserWidget>(GetWorld(), HUDWidgetClass);
+		if (CurrentWidget != nullptr) {
+			CurrentWidget->AddToViewport();
+		}
 	}
 }
