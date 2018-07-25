@@ -8,7 +8,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "Classes/Components/SphereComponent.h"
+#include "Classes/Components/SphereComponent.h" 
 
 //////////////////////////////////////////////////////////////////////////
 // AAlsEscapeCharacter
@@ -47,7 +47,9 @@ AAlsEscapeCharacter::AAlsEscapeCharacter()
 	CollectionSphere = CreateDefaultSubobject<USphereComponent>(TEXT("CollectionSphere"));
 	CollectionSphere->SetupAttachment(RootComponent);
 	CollectionSphere->SetSphereRadius(200.0f);
-	SpeedFactor = 0.5f;
+	SpeedFactor = 2.0f;
+	InitialStamina = 100.0f;
+	CharacterStamina = InitialStamina; 
 	BaseSpeed = GetCharacterMovement()->MaxWalkSpeed;
 	PrimaryActorTick.bCanEverTick = true; 
 
@@ -147,7 +149,22 @@ void AAlsEscapeCharacter::MoveRight(float Value)
 
 void AAlsEscapeCharacter::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
+	if (IsSprinting) {
+		if (GetCurrentStamina() <= 0) {
+			StopCharacterSprint();
+		}
+		else {
+			UpdateStamina(-0.5f);
+		}
+	}
+
+	if (GetCurrentStamina() < 100 && !IsSprinting) {
+		UpdateStamina(0.25f);
+	}
+
 }
+
+
 
 void AAlsEscapeCharacter::CharacterSprint() {
 	GetCharacterMovement()->MaxWalkSpeed *= SpeedFactor;
@@ -158,3 +175,26 @@ void AAlsEscapeCharacter::StopCharacterSprint() {
 	GetCharacterMovement()->MaxWalkSpeed = BaseSpeed;
 	IsSprinting = false;
 }
+
+float AAlsEscapeCharacter::GetInitialStamina() {
+	return InitialStamina;
+}
+
+float AAlsEscapeCharacter::GetCurrentStamina() {
+	return CharacterStamina;
+}
+
+void AAlsEscapeCharacter::UpdateStamina(float StaminaUpdate)
+{
+	CharacterStamina = GetCurrentStamina() + StaminaUpdate;
+
+	if (GetCurrentStamina() > 100) {
+		CharacterStamina = 100;
+
+		if (GetCurrentStamina() < 0) {
+			CharacterStamina = 0;
+		}
+	}
+
+}
+

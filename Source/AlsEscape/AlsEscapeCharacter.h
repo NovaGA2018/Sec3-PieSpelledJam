@@ -32,6 +32,11 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseLookUpRate;
 
+	UFUNCTION(BlueprintPure, Category = "Stats")float GetInitialStamina();
+	UFUNCTION(BlueprintPure, Category = "Stats")float GetCurrentStamina();
+	UFUNCTION(BlueprintCallable, Category = "Stats")void UpdateStamina(float StaminaUpdate);
+	
+
 protected:
 
 	/** Resets HMD orientation in VR. */
@@ -71,6 +76,7 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "Stats") void CharacterSprint(); 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats") float SpeedFactor;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats") float BaseSpeed;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats") float InitialStamina;
 
 public:
 	/** Returns CameraBoom subobject **/
@@ -85,6 +91,11 @@ public:
 
 
 	}
+
+private:
+
+	UPROPERTY(VisibleAnywhere, Category = "Stats")float CharacterStamina; 
+
 
 };
 

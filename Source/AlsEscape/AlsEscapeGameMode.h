@@ -6,6 +6,7 @@
 #include "GameFramework/GameModeBase.h"
 #include "AlsEscapeGameMode.generated.h"
 
+
 UCLASS(minimalapi)
 class AAlsEscapeGameMode : public AGameModeBase
 {
@@ -13,6 +14,17 @@ class AAlsEscapeGameMode : public AGameModeBase
 
 public:
 	AAlsEscapeGameMode();
+	virtual void BeginPlay() override;
+
+
+protected:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "CustomWidget", meta = (BlueprintProtected = "true"))
+		TSubclassOf<class UUserWidget> HUDWidgetClass;
+
+	UPROPERTY()
+		class UUserWidget* CurrentWidget;
+
+
 };
 
 
