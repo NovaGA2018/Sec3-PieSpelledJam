@@ -47,13 +47,10 @@ AAlsEscapeCharacter::AAlsEscapeCharacter()
 	CollectionSphere = CreateDefaultSubobject<USphereComponent>(TEXT("CollectionSphere"));
 	CollectionSphere->SetupAttachment(RootComponent);
 	CollectionSphere->SetSphereRadius(200.0f);
-
 	SpeedFactor = 2.0f;
 	InitialStamina = 100.0f;
 	CharacterStamina = InitialStamina; 
-
 	SpeedFactor = 2.0f;
-
 	BaseSpeed = GetCharacterMovement()->MaxWalkSpeed;
 	PrimaryActorTick.bCanEverTick = true; 
 
